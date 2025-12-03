@@ -1,0 +1,6 @@
+@WebStore.Web_HostAddress = http://localhost:5172
+
+GET {{WebStore.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
