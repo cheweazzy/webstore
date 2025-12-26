@@ -91,5 +91,30 @@ namespace WebStore.Services.ConcreteServices
                 throw;
             }
         }
-    }
+        // ... (reszta kodu bez zmian)
+
+        // --- WKLEJ TO NA KOŃCU KLASY ProductService ---
+        public bool DeleteProduct(Expression<Func<Product, bool>> filterExpression)
+        {
+            try
+            {
+                if (filterExpression == null)
+                    throw new ArgumentNullException("Filter expression is null");
+
+                var productEntity = DbContext.Products.FirstOrDefault(filterExpression);
+                
+                if (productEntity == null)
+                    return false; // Produkt nie istnieje, więc nie usuwamy
+
+                DbContext.Products.Remove(productEntity);
+                DbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, ex.Message);
+                throw;
+            }
+        }
+    } // Koniec klasy
 }
